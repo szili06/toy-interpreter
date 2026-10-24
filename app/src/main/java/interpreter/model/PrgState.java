@@ -1,8 +1,6 @@
 package interpreter.model;
 
-import interpreter.model.adt.IDictionary;
-import interpreter.model.adt.IList;
-import interpreter.model.adt.IStack;
+import interpreter.model.adt.*;
 import interpreter.model.stmt.IStmt;
 import interpreter.model.value.IValue;
 
@@ -45,6 +43,13 @@ public class PrgState {
     }
 
     public String toString() {
-        return "Original program: " + this.originalProgram + ", ExeStack: " + this.exeStack + ", SymTable: " + this.symTable + ", Out: " + this.out;
+        return "ExeStack: " + this.exeStack + ", SymTable: " + this.symTable + ", Out: " + this.out;
+    }
+
+    public void fullReset() {
+        exeStack = new MyStack<>();
+        symTable = new MyDictionary<>();
+        out = new MyList<>();
+        exeStack.push(originalProgram);
     }
 }

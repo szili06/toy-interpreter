@@ -23,13 +23,27 @@ public class View {
             case 1:
                 int response = Integer.parseInt(IO.readln("Which example program do you want to select: "));
                 var repo = getRepo(response);
+                if (repo == null) {
+                    break;
+                }
                 controller = new Controller(repo, true);
                 break;
             case 2:
+                if(controller == null) {
+                    IO.println("No program selected.");
+                    break;
+                }
                 try {
+                    try {
+                        controller.resetProg();
+                    } catch (MyException e) {
+                        IO.println("Error on resetting program to original state: " + e);
+                        break;
+                    }
                     controller.allStep();
                 } catch (MyException e) {
-                    System.err.println(e);
+                    IO.println("Error on running program: " + e);
+                    break;
                 }
                 break;
         }
@@ -42,6 +56,9 @@ public class View {
             case 3 -> Examples.ex3;
             default -> null;
         };
+        if (program == null) {
+            return null;
+        }
         PrgState state = new PrgState(new MyStack<>(), new MyDictionary<>(),
                 new MyList<>(), program);
         var repo = new Repository();

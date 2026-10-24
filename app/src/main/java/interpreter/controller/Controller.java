@@ -1,5 +1,6 @@
 package interpreter.controller;
 
+import interpreter.exceptions.ADTException;
 import interpreter.exceptions.MyException;
 import interpreter.exceptions.StatementException;
 import interpreter.model.PrgState;
@@ -23,14 +24,18 @@ public class Controller {
 
     public void allStep() throws MyException {
         PrgState prg = repo.getCrtPrg();
-        if(displayFlag) display(prg);
+        display(prg);
         while (!prg.getExeStack().isEmpty()) {
             oneStep(prg);
-            if(displayFlag) display(prg);
+            display(prg);
         }
     }
 
     public void display(PrgState state) {
-        IO.println(state.toString());
+        if(displayFlag) { IO.println(state.toString()); }
+    }
+
+    public void resetProg() throws ADTException {
+        repo.resetCrtPrg();
     }
 }

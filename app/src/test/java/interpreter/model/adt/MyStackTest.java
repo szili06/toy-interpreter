@@ -11,20 +11,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class MyStackTest {
     private static IStack<Integer> stack;
 
-    @BeforeAll
-    static void setup() {
-        stack = new MyStack<>();
-    }
-
     @BeforeEach
     void setupEach() {
-        while(!stack.isEmpty()) {
-            try {
-                stack.pop();
-            } catch (MyException e){
-                throw new RuntimeException("");
-            }
-        }
+        stack = new MyStack<>();
     }
 
     @Test

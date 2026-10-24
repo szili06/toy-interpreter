@@ -5,6 +5,8 @@
  * For more details on building Java & JVM projects, please refer to https://docs.gradle.org/9.7.1/userguide/building_java_projects.html in the Gradle documentation.
  */
 
+import org.gradle.api.tasks.JavaExec
+
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
@@ -34,7 +36,7 @@ application {
 }
 
 tasks.named<JavaExec>("run") {
-    standardInput = System.`in`
+    standardInput = System.`in`;
 }
 
 tasks.named<Test>("test") {
