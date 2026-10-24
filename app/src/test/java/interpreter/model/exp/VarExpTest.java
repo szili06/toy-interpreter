@@ -1,6 +1,5 @@
 package interpreter.model.exp;
 
-import interpreter.exceptions.ADTException;
 import interpreter.exceptions.ExpressionException;
 import interpreter.exceptions.MyException;
 import interpreter.model.adt.MyDictionary;
@@ -24,7 +23,7 @@ class VarExpTest {
     }
 
     @Test
-    void testLookupWorks() throws ADTException {
+    void testLookupWorks() throws MyException {
         assertEquals(new IntValue(2), new VarExp("a").eval(symTable));
         assertEquals(new IntValue(-2), new VarExp("b").eval(symTable));
         assertEquals(new BoolValue(true), new VarExp("OK").eval(symTable));
