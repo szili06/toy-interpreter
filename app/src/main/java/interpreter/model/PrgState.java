@@ -20,12 +20,31 @@ public class PrgState {
         exeStack.push(program);
     }
 
+    public IStack<IStmt> getExeStack() {
+        return this.exeStack;
+    }
+
+    public void setExeStack(IStack<IStmt> newExeStack) {
+        this.exeStack = newExeStack;
+    }
+
     public IDictionary<String, IValue> getSymTable() {
         return this.symTable;
     }
 
-    public IStack<IStmt> getExeStack() {
-        return this.exeStack;
+    public void setSymTable(IDictionary<String, IValue> newSymTable) {
+        this.symTable = newSymTable;
     }
-// getters, setters, toString ...
+
+    public IList<IValue> getOut() {
+        return this.out;
+    }
+
+    public void setOut(IList<IValue> newOut) {
+        this.out = newOut;
+    }
+
+    public String toString() {
+        return "Original program: " + this.originalProgram + ", ExeStack: " + this.exeStack + ", SymTable: " + this.symTable + ", Out: " + this.out;
+    }
 }

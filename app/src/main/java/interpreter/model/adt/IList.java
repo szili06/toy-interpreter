@@ -1,7 +1,9 @@
 package interpreter.model.adt;
 
+import interpreter.exceptions.ADTException;
+
 public interface IList<T> {
-    public void add(T val);
-    public T get(int pos);
-    public int size();
+    void add(T val);
+    T get(int pos) throws ADTException;
+    int size();
 }
