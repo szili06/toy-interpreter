@@ -10,7 +10,7 @@ import interpreter.model.type.IntType;
 import interpreter.model.value.BoolValue;
 import interpreter.model.value.IntValue;
 
-class Examples {
+public class Examples {
     public static IStmt ex1 = new CompStmt(new VarDeclStmt("v", new IntType()),
             new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(2))),
                     new PrintStmt(new VarExp("v"))));
