@@ -23,6 +23,8 @@ class ControllerTest {
         repo.addPrg(state);
         var controller = new Controller(repo, false);
         assertDoesNotThrow(controller::allStep);
+        assertTrue(state.getExeStack().isEmpty());
+        assertEquals(1, state.getOut().size());
         assertEquals(new IntValue(2),state.getOut().get(0));
     }
 
@@ -33,6 +35,8 @@ class ControllerTest {
         repo.addPrg(state);
         var controller = new Controller(repo, false);
         assertDoesNotThrow(controller::allStep);
+        assertTrue(state.getExeStack().isEmpty());
+        assertEquals(1, state.getOut().size());
         assertEquals(new IntValue(18),state.getOut().get(0));
     }
 
@@ -43,6 +47,8 @@ class ControllerTest {
         repo.addPrg(state);
         var controller = new Controller(repo, false);
         assertDoesNotThrow(controller::allStep);
+        assertTrue(state.getExeStack().isEmpty());
+        assertEquals(1, state.getOut().size());
         assertEquals(new IntValue(2),state.getOut().get(0));
     }
 
