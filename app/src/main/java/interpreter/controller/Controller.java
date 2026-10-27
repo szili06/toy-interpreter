@@ -8,8 +8,9 @@ import interpreter.model.stmt.IStmt;
 import interpreter.repository.IRepository;
 
 public class Controller {
-    final IRepository repo;
-    boolean displayFlag;
+    private final IRepository repo;
+    private boolean displayFlag;
+
     public Controller(IRepository repo, boolean displayFlag) {
         this.repo = repo;
         this.displayFlag = displayFlag;
