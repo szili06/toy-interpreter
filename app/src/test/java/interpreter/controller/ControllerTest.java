@@ -19,8 +19,7 @@ class ControllerTest {
     @Test
     void TestProgOne() throws ADTException {
         var state = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), ex1);
-        var repo = new Repository();
-        repo.addPrg(state);
+        var repo = new Repository(state);
         var controller = new Controller(repo, false);
         assertDoesNotThrow(controller::allStep);
         assertTrue(state.getExeStack().isEmpty());
@@ -31,8 +30,7 @@ class ControllerTest {
     @Test
     void TestProgTwo() throws ADTException {
         var state = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), ex2);
-        var repo = new Repository();
-        repo.addPrg(state);
+        var repo = new Repository(state);
         var controller = new Controller(repo, false);
         assertDoesNotThrow(controller::allStep);
         assertTrue(state.getExeStack().isEmpty());
@@ -43,8 +41,7 @@ class ControllerTest {
     @Test
     void TestProgThree() throws ADTException {
         var state = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), ex3);
-        var repo = new Repository();
-        repo.addPrg(state);
+        var repo = new Repository(state);
         var controller = new Controller(repo, false);
         assertDoesNotThrow(controller::allStep);
         assertTrue(state.getExeStack().isEmpty());
@@ -56,8 +53,7 @@ class ControllerTest {
     void TestStepOneOnEmptyThrows() {
         var state = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(),
                 new PrintStmt(new ValueExp(new IntValue(1))));
-        var repo = new Repository();
-        repo.addPrg(state);
+        var repo = new Repository(state);
         var controller = new Controller(repo, false);
         var emptyState = assertDoesNotThrow(() -> controller.oneStep(state));
         assertThrows(StatementException.class, () -> controller.oneStep(emptyState));

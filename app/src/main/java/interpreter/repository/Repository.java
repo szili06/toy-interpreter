@@ -5,7 +5,11 @@ import interpreter.model.PrgState;
 import interpreter.model.adt.MyList;
 
 public class Repository implements IRepository {
-    MyList<PrgState> states = new MyList<>();
+    final MyList<PrgState> states = new MyList<>();
+
+    public Repository(PrgState state) {
+        states.add(state);
+    }
 
     @Override
     public PrgState getCrtPrg() throws ADTException {
@@ -15,9 +19,5 @@ public class Repository implements IRepository {
     @Override
     public void resetCrtPrg() throws ADTException {
         getCrtPrg().fullReset();
-    }
-
-    public void addPrg(PrgState state) {
-        this.states.add(state);
     }
 }

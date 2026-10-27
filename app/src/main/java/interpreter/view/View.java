@@ -65,9 +65,7 @@ public class View {
         }
         PrgState state = new PrgState(new MyStack<>(), new MyDictionary<>(),
                 new MyList<>(), program);
-        var repo = new Repository();
-        repo.addPrg(state);
-        return repo;
+        return new Repository(state);
     }
 
     public void run() {
