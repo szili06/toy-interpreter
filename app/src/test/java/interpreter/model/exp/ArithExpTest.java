@@ -54,5 +54,7 @@ class ArithExpTest {
     void nonIntegerOperandThrows() {
         var exp = new ArithExp(ArithOp.ADD, new ValueExp(new BoolValue(true)), new ValueExp(new BoolValue(false)));
         assertThrows(ExpressionException.class, () -> exp.eval(dict));
+        var exp2 = new ArithExp(ArithOp.ADD, new ValueExp(new BoolValue(false)), new ValueExp(new BoolValue(true)));
+        assertThrows(ExpressionException.class, () -> exp2.eval(dict));
     }
 }
