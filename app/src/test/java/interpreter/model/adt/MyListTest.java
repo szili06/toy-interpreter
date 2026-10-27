@@ -47,4 +47,9 @@ class MyListTest {
         list.add(1);
         assertEquals(3, list.size());
     }
+
+    @Test
+    void negativeIndexThrows() {
+        assertThrows(ADTException.class, () -> list.get(-1));
+    }
 }
