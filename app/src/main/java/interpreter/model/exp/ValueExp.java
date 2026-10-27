@@ -6,7 +6,7 @@ import interpreter.model.value.IValue;
 
 public record ValueExp(IValue val) implements IExp {
     @Override
-    public IValue eval(IDictionary<String, IValue> symTable) throws ADTException {
+    public IValue eval(IDictionary<String, IValue> symTable) {
         return val;
     }
     @Override
