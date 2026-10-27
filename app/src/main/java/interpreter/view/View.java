@@ -21,12 +21,16 @@ public class View {
     public void handleInput(int input) {
         switch (input) {
             case 1:
-                int response = Integer.parseInt(IO.readln("Which example program do you want to select: "));
-                var repo = getRepo(response);
-                if (repo == null) {
-                    break;
+                try {
+                    int response = Integer.parseInt(IO.readln("Which example program do you want to select: "));
+                    var repo = getRepo(response);
+                    if (repo == null) {
+                        break;
+                    }
+                    controller = new Controller(repo, true);
+                } catch (NumberFormatException e) {
+                    IO.println("Invalid input!");
                 }
-                controller = new Controller(repo, true);
                 break;
             case 2:
                 if(controller == null) {
@@ -64,5 +68,19 @@ public class View {
         var repo = new Repository();
         repo.addPrg(state);
         return repo;
+    }
+
+    public void run() {
+        while(true) {
+            printMenu();
+            try {
+                int response = Integer.parseInt(IO.readln("Enter your choice: "));
+                if(response == 0)
+                    break;
+                handleInput(response);
+            } catch (NumberFormatException e) {
+                IO.println("Invalid input!");
+            }
+        }
     }
 }

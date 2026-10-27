@@ -28,10 +28,10 @@ class CompStmtTest {
 
     @Test
     void testS1() throws ADTException {
-        var left = new AssignStmt("a", new ValueExp(new IntValue(3)));
+        var left = new AssignStmt("a", new ValueExp(new IntValue(2)));
         var right = new AssignStmt("a", new ValueExp(new IntValue(3)));
         new CompStmt(left, right).execute(state);
-        assertEquals(right, exeStack.pop());
         assertEquals(left, exeStack.pop());
+        assertEquals(right, exeStack.pop());
     }
 }
