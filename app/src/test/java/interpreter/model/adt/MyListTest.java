@@ -52,4 +52,9 @@ class MyListTest {
     void negativeIndexThrows() {
         assertThrows(ADTException.class, () -> list.get(-1));
     }
+
+    @Test
+    void getOnEmptyListThrows() {
+        assertThrows(ADTException.class, () -> list.get(0));
+    }
 }

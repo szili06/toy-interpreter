@@ -52,4 +52,13 @@ class MyDictionaryTest {
     void undefinedKeyUpdateThrows() {
         assertThrows(ADTException.class, () -> dict.update("a", new BoolValue(false)));
     }
+
+    @Test
+    void testIsDefined() {
+        assertDoesNotThrow(() -> dict.put("a", new IntValue(2)));
+        assertDoesNotThrow(() -> dict.put("b", new BoolValue(true)));
+        assertTrue(dict.isDefined("a"));
+        assertTrue(dict.isDefined("b"));
+        assertFalse(dict.isDefined("ok"));
+    }
 }

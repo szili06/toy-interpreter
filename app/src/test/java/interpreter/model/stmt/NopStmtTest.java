@@ -27,6 +27,5 @@ class NopStmtTest {
     void testS6() {
         var stmt = new NopStmt();
         assertDoesNotThrow(() -> stmt.execute(state));
-        assertTrue(true);
     }
 }

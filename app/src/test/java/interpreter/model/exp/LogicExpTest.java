@@ -1,5 +1,6 @@
 package interpreter.model.exp;
 
+import interpreter.exceptions.ExpressionException;
 import interpreter.exceptions.MyException;
 import interpreter.model.adt.MyDictionary;
 import interpreter.model.value.BoolValue;
@@ -36,7 +37,7 @@ class LogicExpTest {
 
     @Test
     void nonboolOperandThrows() {
-        assertThrows(MyException.class, () -> new LogicExp(LogicOp.AND, new ValueExp(new IntValue(5)), new ValueExp(new BoolValue(true))).eval(symTable));
-        assertThrows(MyException.class, () -> new LogicExp(LogicOp.AND, new ValueExp(new BoolValue(true)), new ValueExp(new IntValue(5))).eval(symTable));
+        assertThrows(ExpressionException.class, () -> new LogicExp(LogicOp.AND, new ValueExp(new IntValue(5)), new ValueExp(new BoolValue(true))).eval(symTable));
+        assertThrows(ExpressionException.class, () -> new LogicExp(LogicOp.AND, new ValueExp(new BoolValue(true)), new ValueExp(new IntValue(5))).eval(symTable));
     }
 }
