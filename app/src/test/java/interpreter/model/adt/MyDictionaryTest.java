@@ -47,4 +47,9 @@ class MyDictionaryTest {
         assertDoesNotThrow(() -> dict.update("a", val2));
         assertEquals(val2, dict.lookup("a"));
     }
+
+    @Test
+    void undefinedKeyUpdateThrows() {
+        assertThrows(ADTException.class, () -> dict.update("a", new BoolValue(false)));
+    }
 }
