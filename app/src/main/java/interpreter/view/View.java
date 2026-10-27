@@ -7,6 +7,7 @@ import interpreter.model.adt.MyDictionary;
 import interpreter.model.adt.MyList;
 import interpreter.model.adt.MyStack;
 import interpreter.model.stmt.IStmt;
+import interpreter.repository.IRepository;
 import interpreter.repository.Repository;
 
 public class View {
@@ -22,14 +23,19 @@ public class View {
         switch (input) {
             case 1:
                 try {
+                    IO.println("Available programs:\n");
+                    IO.println("1: int v; v = 2; print(v)");
+                    IO.println("2: int a; int b; a = 2 + 3 * 5; b = a + 1; print(b)");
+                    IO.println("3: bool a; int v; a = true; (if a then v = 2 else v = 3); print(v)");
                     int response = Integer.parseInt(IO.readln("Which example program do you want to select: "));
                     var repo = getRepo(response);
                     if (repo == null) {
                         break;
                     }
                     controller = new Controller(repo, true);
+                    IO.println("Program " + response + " selected.");
                 } catch (NumberFormatException e) {
-                    IO.println("Invalid input!");
+                    IO.println("Invalid input! Please choose 1, 2 or 3");
                 }
                 break;
             case 2:
@@ -50,10 +56,12 @@ public class View {
                     break;
                 }
                 break;
+                default:
+                    IO.println("Invalid input! Please choose 0, 1 or 2");
         }
     }
 
-    private static Repository getRepo(int response) {
+    private static IRepository getRepo(int response) {
         IStmt program = switch (response) {
             case 1 -> Examples.ex1;
             case 2 -> Examples.ex2;
@@ -77,7 +85,7 @@ public class View {
                     break;
                 handleInput(response);
             } catch (NumberFormatException e) {
-                IO.println("Invalid input!");
+                IO.println("Invalid input! Please choose 0, 1 or 2");
             }
         }
     }
