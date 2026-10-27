@@ -7,4 +7,6 @@ public interface IRepository {
     PrgState getCrtPrg() throws ADTException;
 
     void resetCrtPrg() throws ADTException;
+
+    void addPrg(PrgState state);
 }
