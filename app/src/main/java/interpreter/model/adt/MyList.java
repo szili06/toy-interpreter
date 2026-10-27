@@ -16,7 +16,7 @@ public class MyList<T> implements IList<T> {
 
     @Override
     public T get(int pos) throws ADTException {
-        if(pos >= list.size()) throw new ADTException("position out of range");
+        if(pos >= list.size() || pos < 0) throw new ADTException("position out of range");
         return list.get(pos);
     }
 
