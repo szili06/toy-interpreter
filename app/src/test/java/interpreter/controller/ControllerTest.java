@@ -3,9 +3,6 @@ package interpreter.controller;
 import interpreter.exceptions.ADTException;
 import interpreter.exceptions.StatementException;
 import interpreter.model.PrgState;
-import interpreter.model.adt.MyDictionary;
-import interpreter.model.adt.MyList;
-import interpreter.model.adt.MyStack;
 import interpreter.model.exp.ValueExp;
 import interpreter.model.stmt.PrintStmt;
 import interpreter.model.value.IntValue;
@@ -18,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ControllerTest {
     @Test
     void TestProgOne() throws ADTException {
-        var state = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), ex1);
+        var state = PrgState.of(ex1);
         var repo = new Repository(state);
         var controller = new Controller(repo, false);
         assertDoesNotThrow(controller::allStep);
@@ -29,7 +26,7 @@ class ControllerTest {
 
     @Test
     void TestProgTwo() throws ADTException {
-        var state = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), ex2);
+        var state = PrgState.of(ex2);
         var repo = new Repository(state);
         var controller = new Controller(repo, false);
         assertDoesNotThrow(controller::allStep);
@@ -40,7 +37,7 @@ class ControllerTest {
 
     @Test
     void TestProgThree() throws ADTException {
-        var state = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), ex3);
+        var state = PrgState.of(ex3);
         var repo = new Repository(state);
         var controller = new Controller(repo, false);
         assertDoesNotThrow(controller::allStep);
@@ -51,8 +48,7 @@ class ControllerTest {
 
     @Test
     void TestStepOneOnEmptyThrows() {
-        var state = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(),
-                new PrintStmt(new ValueExp(new IntValue(1))));
+        var state = PrgState.of(new PrintStmt(new ValueExp(new IntValue(1))));
         var repo = new Repository(state);
         var controller = new Controller(repo, false);
         var emptyState = assertDoesNotThrow(() -> controller.oneStep(state));

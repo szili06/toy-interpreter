@@ -71,8 +71,7 @@ public class View {
         if (program == null) {
             return null;
         }
-        PrgState state = new PrgState(new MyStack<>(), new MyDictionary<>(),
-                new MyList<>(), program);
+        PrgState state = PrgState.of(program);
         return new Repository(state);
     }
 

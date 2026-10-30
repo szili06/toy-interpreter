@@ -17,11 +17,8 @@ class NopStmtTest {
 
     @BeforeEach
     void setupEach() {
-        MyStack<IStmt> exeStack = new MyStack<>();
-        MyDictionary<String, IValue> symTable = new MyDictionary<>();
-        MyList<IValue> out = new MyList<>();
         IStmt program = new AssignStmt("a", new ValueExp(new IntValue(3)));
-        state = new PrgState(exeStack, symTable, out, program);
+        state = PrgState.of(program);
     }
     @Test
     void testS6() {

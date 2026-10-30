@@ -14,16 +14,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CompStmtTest {
-    private MyStack<IStmt> exeStack;
     private PrgState state;
 
     @BeforeEach
     void setupEach() {
-        exeStack = new MyStack<>();
-        MyDictionary<String, IValue> symTable = new MyDictionary<>();
-        MyList<IValue> out = new MyList<>();
         IStmt program = new AssignStmt("a", new ValueExp(new IntValue(3)));
-        state = new PrgState(exeStack, symTable, out, program);
+        state = PrgState.of(program);
     }
 
     @Test
@@ -31,7 +27,7 @@ class CompStmtTest {
         var left = new AssignStmt("a", new ValueExp(new IntValue(2)));
         var right = new AssignStmt("a", new ValueExp(new IntValue(3)));
         new CompStmt(left, right).execute(state);
-        assertEquals(left, exeStack.pop());
-        assertEquals(right, exeStack.pop());
+        assertEquals(left, state.getExeStack().pop());
+        assertEquals(right, state.getExeStack().pop());
     }
 }

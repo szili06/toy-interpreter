@@ -16,16 +16,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class IfStmtTest {
-    private MyDictionary<String, IValue> symTable;
     private PrgState state;
 
     @BeforeEach
     void setupEach() {
-        MyStack<IStmt> exeStack = new MyStack<>();
-        symTable = new MyDictionary<>();
-        MyList<IValue> out = new MyList<>();
         IStmt program = new AssignStmt("a", new ValueExp(new IntValue(3)));
-        state = new PrgState(exeStack, symTable, out, program);
+        state = PrgState.of(program);
     }
 
     @Test
@@ -36,8 +32,8 @@ class IfStmtTest {
         var stmt = new IfStmt(cond, stmtThen, stmtElse);
         assertDoesNotThrow(() -> stmt.execute(state));
         assertDoesNotThrow(() -> state.getExeStack().pop().execute(state));
-        assertTrue(symTable.isDefined("a"));
-        assertFalse(symTable.isDefined("b"));
+        assertTrue(state.getSymTable().isDefined("a"));
+        assertFalse(state.getSymTable().isDefined("b"));
     }
 
     @Test
@@ -48,8 +44,8 @@ class IfStmtTest {
         var stmt = new IfStmt(cond, stmtThen, stmtElse);
         assertDoesNotThrow(() -> stmt.execute(state));
         assertDoesNotThrow(() -> state.getExeStack().pop().execute(state));
-        assertFalse(symTable.isDefined("a"));
-        assertTrue(symTable.isDefined("b"));
+        assertFalse(state.getSymTable().isDefined("a"));
+        assertTrue(state.getSymTable().isDefined("b"));
     }
 
     @Test

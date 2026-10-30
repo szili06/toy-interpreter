@@ -17,24 +17,20 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class VarDeclStmtTest {
-    private MyDictionary<String, IValue> symTable;
     private PrgState state;
 
     @BeforeEach
     void setupEach() {
-        MyStack<IStmt> exeStack = new MyStack<>();
-        symTable = new MyDictionary<>();
-        MyList<IValue> out = new MyList<>();
         IStmt program = new AssignStmt("a", new ValueExp(new IntValue(3)));
-        state = new PrgState(exeStack, symTable, out, program);
+        state = PrgState.of(program);
     }
 
     @Test
     void testS3() throws MyException {
         var stmt = new VarDeclStmt("a", new IntType());
         assertDoesNotThrow(() -> stmt.execute(state));
-        assertTrue(symTable.isDefined("a"));
-        assertEquals(new IntType().defaultValue(), symTable.lookup("a"));
+        assertTrue(state.getSymTable().isDefined("a"));
+        assertEquals(new IntType().defaultValue(), state.getSymTable().lookup("a"));
     }
 
     @Test

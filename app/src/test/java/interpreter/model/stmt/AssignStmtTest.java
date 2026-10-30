@@ -18,25 +18,21 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AssignStmtTest {
-    private MyDictionary<String, IValue> symTable;
     private PrgState state;
 
     @BeforeEach
     void setupEach() {
-        MyStack<IStmt> exeStack = new MyStack<>();
-        symTable = new MyDictionary<>();
-        MyList<IValue> out = new MyList<>();
         IStmt program = new AssignStmt("a", new ValueExp(new IntValue(3)));
-        state = new PrgState(exeStack, symTable, out, program);
+        state = PrgState.of(program);
     }
 
     @Test
     void testS2() throws MyException {
         var stmt = new AssignStmt("a", new ValueExp(new IntValue(3)));
-        symTable.put("a", new IntType().defaultValue());
+        state.getSymTable().put("a", new IntType().defaultValue());
         stmt.execute(state);
-        assertTrue(symTable.isDefined("a"));
-        assertEquals(new IntValue(3), symTable.lookup("a"));
+        assertTrue(state.getSymTable().isDefined("a"));
+        assertEquals(new IntValue(3), state.getSymTable().lookup("a"));
     }
 
     @Test
@@ -48,7 +44,7 @@ class AssignStmtTest {
     @Test
     void wrongValueTypeThrows() throws MyException {
         var stmt = new AssignStmt("a", new ValueExp(new BoolValue(false)));
-        symTable.put("a", new IntType().defaultValue());
+        state.getSymTable().put("a", new IntType().defaultValue());
         assertThrows(StatementException.class, () -> stmt.execute(state));
     }
 }
