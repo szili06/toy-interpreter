@@ -61,4 +61,33 @@ class MyDictionaryTest {
         assertTrue(dict.isDefined("b"));
         assertFalse(dict.isDefined("ok"));
     }
+
+    @Test
+    void testToMap() throws MyException {
+        dict.put("a", new IntValue(2));
+        dict.put("b", new IntValue(0));
+        dict.put("ok", new BoolValue(true));
+        var map = dict.toMap();
+        assertEquals(new IntValue(2), map.get("a"));
+        assertEquals(new IntValue(0), map.get("b"));
+        assertEquals(new BoolValue(true), map.get("ok"));
+    }
+
+    @Test
+    void testRemoveWorks() throws MyException {
+        assertDoesNotThrow(() -> dict.put("a", new IntValue(2)));
+
+        assertEquals(new IntValue(2), dict.lookup("a"));
+
+        assertDoesNotThrow(() -> dict.remove("a"));
+        assertThrows(ADTException.class, () -> dict.lookup("a"));
+    }
+
+    @Test
+    void testRemoveThrows() throws MyException {
+        assertThrows(ADTException.class, () -> dict.lookup("a"));
+        assertDoesNotThrow(() -> dict.put("a", new BoolValue(false)));
+        assertDoesNotThrow(() -> dict.remove("a"));
+        assertThrows(ADTException.class, () -> dict.remove("a"));
+    }
 }

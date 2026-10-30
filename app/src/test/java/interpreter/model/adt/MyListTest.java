@@ -57,4 +57,15 @@ class MyListTest {
     void getOnEmptyListThrows() {
         assertThrows(ADTException.class, () -> list.get(0));
     }
+
+    @Test
+    void testMyList() {
+        list.add(1);
+        list.add(2);
+        list.add(-1);
+        var listCopy = list.toList();
+        assertEquals(1, listCopy.get(0));
+        assertEquals(2, listCopy.get(1));
+        assertEquals(-1, listCopy.get(2));
+    }
 }

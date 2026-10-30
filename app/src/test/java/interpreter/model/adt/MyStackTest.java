@@ -33,4 +33,15 @@ class MyStackTest {
         assertTrue(stack.isEmpty());
         assertThrows(ADTException.class, () -> stack.pop());
     }
+
+    @Test
+    void testToList() {
+        stack.push(1);
+        stack.push(2);
+        stack.push(-1);
+        var list = stack.toList();
+        assertEquals(-1, list.get(0));
+        assertEquals(2, list.get(1));
+        assertEquals(1, list.get(2));
+    }
 }
