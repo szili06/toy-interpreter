@@ -5,10 +5,7 @@ import interpreter.exceptions.MyException;
 import interpreter.model.adt.MyDictionary;
 import interpreter.model.value.BoolValue;
 import interpreter.model.value.IntValue;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
-import java.beans.Expression;
 
 import static org.junit.jupiter.api.Assertions.*;
 
