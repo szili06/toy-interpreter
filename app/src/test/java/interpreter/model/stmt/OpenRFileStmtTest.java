@@ -31,6 +31,18 @@ class OpenRFileStmtTest {
 
     @Test
     void testReopenedFileThrows() {
+        IStmt program = new OpenRFileStmt(new ValueExp(new StringValue("build.gradle.kts")));
+        var state = PrgState.of(program);
+        assertDoesNotThrow(() -> program.execute(state));
+        IStmt program2 = new OpenRFileStmt(new ValueExp(new StringValue("build.grade.kts")));
+        var state2 = PrgState.of(program);
+        assertThrows(StatementException.class, () -> program2.execute(state));
+    }
 
+    @Test
+    void testMissingFileThrows() {
+        IStmt program = new OpenRFileStmt(new ValueExp(new StringValue("nonexisitingfile.txt")));
+        var state = PrgState.of(program);
+        assertThrows(StatementException.class, ()-> program.execute(state));
     }
 }

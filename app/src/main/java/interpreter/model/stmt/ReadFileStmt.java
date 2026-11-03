@@ -10,6 +10,7 @@ import interpreter.model.value.StringValue;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Objects;
 
 public record ReadFileStmt(IExp exp, String varName) implements IStmt {
 
@@ -35,6 +36,11 @@ public record ReadFileStmt(IExp exp, String varName) implements IStmt {
             BufferedReader reader = state.getFileTable().lookup((StringValue) fileName);
 
             String line = reader.readLine();
+
+            if(line == null) {
+                state.getSymTable().update(varName, new IntValue(0));
+                return state;
+            }
 
             IntValue val = new IntValue(Integer.parseInt(line.strip()));
 
