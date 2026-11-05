@@ -68,11 +68,14 @@ public class View {
             case 3 -> Examples.ex3;
             default -> null;
         };
+
+        String logFilePath = "log" + response + ".txt";
+
         if (program == null) {
             return null;
         }
         PrgState state = PrgState.of(program);
-        return new Repository(state);
+        return new Repository(state, logFilePath);
     }
 
     public void run() {

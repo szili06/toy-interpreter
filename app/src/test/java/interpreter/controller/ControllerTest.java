@@ -16,7 +16,7 @@ class ControllerTest {
     @Test
     void TestProgOne() throws ADTException {
         var state = PrgState.of(ex1);
-        var repo = new Repository(state);
+        var repo = new Repository(state, "log1.txt");
         var controller = new Controller(repo, false);
         assertDoesNotThrow(controller::allStep);
         assertTrue(state.getExeStack().isEmpty());
@@ -27,7 +27,7 @@ class ControllerTest {
     @Test
     void TestProgTwo() throws ADTException {
         var state = PrgState.of(ex2);
-        var repo = new Repository(state);
+        var repo = new Repository(state, "log2.txt");
         var controller = new Controller(repo, false);
         assertDoesNotThrow(controller::allStep);
         assertTrue(state.getExeStack().isEmpty());
@@ -38,7 +38,7 @@ class ControllerTest {
     @Test
     void TestProgThree() throws ADTException {
         var state = PrgState.of(ex3);
-        var repo = new Repository(state);
+        var repo = new Repository(state, "log3.txt");
         var controller = new Controller(repo, false);
         assertDoesNotThrow(controller::allStep);
         assertTrue(state.getExeStack().isEmpty());
@@ -49,7 +49,7 @@ class ControllerTest {
     @Test
     void TestStepOneOnEmptyThrows() {
         var state = PrgState.of(new PrintStmt(new ValueExp(new IntValue(1))));
-        var repo = new Repository(state);
+        var repo = new Repository(state, "log0.txt");
         var controller = new Controller(repo, false);
         var emptyState = assertDoesNotThrow(() -> controller.oneStep(state));
         assertThrows(StatementException.class, () -> controller.oneStep(emptyState));
