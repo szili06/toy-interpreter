@@ -1,4 +1,4 @@
-# Toy Language Interpreter
+# Toy Language Interpreter - In Progress
 
 An interpreter for a small imperative toy language, written in Java 25 with Gradle and JUnit 5. The project follows the Model–View–Controller (MVC) pattern. Programs are written as trees of Java objects, and the interpreter shows every intermediate program state.
 
