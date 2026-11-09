@@ -8,11 +8,19 @@ import interpreter.model.stmt.PrintStmt;
 import interpreter.model.value.IntValue;
 import interpreter.repository.Repository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static interpreter.view.Examples.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ControllerTest {
+    @TempDir
+    Path dir;
+
     @Test
     void TestProgOne() throws ADTException {
         var state = PrgState.of(ex1);
@@ -53,5 +61,18 @@ class ControllerTest {
         var controller = new Controller(repo, false);
         var emptyState = assertDoesNotThrow(() -> controller.oneStep(state));
         assertThrows(StatementException.class, () -> controller.oneStep(emptyState));
+    }
+
+    @Test
+    void logFileContainsTheFourSectionsInOrder() throws IOException {
+        var state = PrgState.of(new PrintStmt(new ValueExp(new IntValue(2))));
+        var repo = new Repository(state, dir.resolve("log.txt").toString());
+        var controller = new Controller(repo, false);
+        assertDoesNotThrow(controller::allStep);
+        String log = Files.readString(dir.resolve("log.txt"));
+        int a = log.indexOf("ExeStack:"), b = log.indexOf("SymTable:"),
+                c = log.indexOf("Out:"),
+                d = log.indexOf("FileTable:");
+        assertTrue(0 <= a && a < b && b < c && c < d);
     }
 }
