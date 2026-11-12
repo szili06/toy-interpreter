@@ -26,6 +26,6 @@ public record IfStmt(IExp exp, IStmt thenS, IStmt elseS) implements IStmt {
 
     @Override
     public String toString() {
-        return "if " + exp + " then " + thenS + " else " + elseS;
+        return "(if (" + exp + ") then (" + thenS + ") else (" + elseS + "))";
     }
 }

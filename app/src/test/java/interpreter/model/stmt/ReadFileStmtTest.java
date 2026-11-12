@@ -1,6 +1,5 @@
 package interpreter.model.stmt;
 
-import interpreter.exceptions.ADTException;
 import interpreter.exceptions.MyException;
 import interpreter.exceptions.StatementException;
 import interpreter.model.PrgState;
@@ -46,7 +45,7 @@ class ReadFileStmtTest {
     @Test
     void variableNotDeclaredThrows() throws MyException {
         new OpenRFileStmt(file).execute(state);
-        assertThrows(ADTException.class, () -> new ReadFileStmt(file, "b").execute(state));
+        assertThrows(StatementException.class, () -> new ReadFileStmt(file, "b").execute(state));
     }
 
     @Test

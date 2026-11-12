@@ -12,18 +12,11 @@ public record CloseRFileStmt(IExp exp) implements IStmt {
 
     @Override
     public PrgState execute(PrgState state) throws MyException {
-        StringValue fileName;
-        try {
-            var temp = exp.eval(state.getSymTable());
-            if(!(temp instanceof StringValue)) {
-                throw new StatementException("filename not a string");
-            }
-            fileName = (StringValue) temp;
-        } catch (MyException e) {
-            throw new StatementException("Error when evaluating filename!");
+        if (!(exp.eval(state.getSymTable()) instanceof StringValue fileName)) {
+            throw new StatementException("closeRFile: " + exp + " is not a string");
         }
-        if(!state.getFileTable().isDefined(fileName)) {
-            throw new StatementException("File " + fileName + " not opened!");
+        if (!state.getFileTable().isDefined(fileName)) {
+            throw new StatementException("closeRFile: file " + fileName + " is not open");
         }
 
         try {

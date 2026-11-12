@@ -25,6 +25,9 @@ public record ReadFileStmt(IExp exp, String varName) implements IStmt {
               throw new StatementException("file " + fileName + " not opened!");
             }
 
+            if (!state.getSymTable().isDefined(varName)) {
+                throw new StatementException("readFile: variable " + varName + " is not declared");
+            }
             if (!(state.getSymTable().lookup(varName) instanceof IntValue)) {
                 throw new StatementException("variable not of type int!");
             }
