@@ -63,9 +63,9 @@ public class View {
 
     private static IRepository getRepo(int response) {
         IStmt program = switch (response) {
-            case 1 -> Examples.ex1;
-            case 2 -> Examples.ex2;
-            case 3 -> Examples.ex3;
+            case 1 -> Examples.EX1;
+            case 2 -> Examples.EX2;
+            case 3 -> Examples.EX3;
             default -> null;
         };
 
