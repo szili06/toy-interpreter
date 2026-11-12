@@ -5,21 +5,36 @@ import interpreter.model.PrgState;
 import interpreter.model.exp.ValueExp;
 import interpreter.model.value.BoolValue;
 import interpreter.model.value.StringValue;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class OpenRFileStmtTest {
 
+    @TempDir
+    private Path dir;
+    private ValueExp file;
+
+    @BeforeEach
+    void setupEach() throws IOException {
+        Path f = dir.resolve("testfile");
+        Files.writeString(f, "123\n");
+        file = new ValueExp(new StringValue(f.toString()));
+    }
+
     @Test
     void testWorks() {
-        IStmt program = new OpenRFileStmt(new ValueExp(new StringValue("build.gradle.kts")));
+        IStmt program = new OpenRFileStmt(file);
         var state = PrgState.of(program);
         assertDoesNotThrow(() -> program.execute(state));
-        assertTrue(state.getFileTable().isDefined(new StringValue("build.gradle.kts")));
+        assertTrue(state.getFileTable().isDefined((StringValue) file.val()));
     }
 
     @Test
@@ -31,11 +46,10 @@ class OpenRFileStmtTest {
 
     @Test
     void testReopenedFileThrows() {
-        IStmt program = new OpenRFileStmt(new ValueExp(new StringValue("build.gradle.kts")));
+        IStmt program = new OpenRFileStmt(file);
         var state = PrgState.of(program);
         assertDoesNotThrow(() -> program.execute(state));
-        IStmt program2 = new OpenRFileStmt(new ValueExp(new StringValue("build.grade.kts")));
-        var state2 = PrgState.of(program);
+        IStmt program2 = new OpenRFileStmt(file);
         assertThrows(StatementException.class, () -> program2.execute(state));
     }
 

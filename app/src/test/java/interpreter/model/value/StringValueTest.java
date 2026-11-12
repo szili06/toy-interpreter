@@ -14,7 +14,7 @@ class StringValueTest {
 
     @Test
     void testToString() {
-        assertEquals("abcdefg", new StringValue("abcdefg").toString());
+        assertEquals("\"abcdefg\"", new StringValue("abcdefg").toString());
     }
 
     @Test

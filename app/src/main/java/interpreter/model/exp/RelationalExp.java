@@ -31,6 +31,6 @@ public record RelationalExp(IExp left, IExp right, RelOp op) implements IExp {
 
     @Override
     public String toString() {
-        return left + " " + op + " " + right;
+        return "(" + left + " " + op + " " + right + ")";
     }
 }

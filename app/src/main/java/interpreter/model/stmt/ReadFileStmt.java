@@ -15,7 +15,7 @@ import java.util.Objects;
 public record ReadFileStmt(IExp exp, String varName) implements IStmt {
 
     @Override
-    public PrgState execute(PrgState state) throws StatementException {
+    public PrgState execute(PrgState state) throws MyException {
         try {
             IValue fileName = exp.eval(state.getSymTable());
             if (!(fileName instanceof StringValue)) {
@@ -25,12 +25,8 @@ public record ReadFileStmt(IExp exp, String varName) implements IStmt {
               throw new StatementException("file " + fileName + " not opened!");
             }
 
-            try {
-                if (!(state.getSymTable().lookup(varName) instanceof IntValue)) {
-                    throw new StatementException("variable not of type int!");
-                }
-            } catch (MyException e) {
-                throw new StatementException("variable not defined!");
+            if (!(state.getSymTable().lookup(varName) instanceof IntValue)) {
+                throw new StatementException("variable not of type int!");
             }
 
             BufferedReader reader = state.getFileTable().lookup((StringValue) fileName);
@@ -45,8 +41,6 @@ public record ReadFileStmt(IExp exp, String varName) implements IStmt {
             IntValue val = new IntValue(Integer.parseInt(line.strip()));
 
             state.getSymTable().update(varName, val);
-        } catch (MyException e) {
-            throw new StatementException("error evaluating filename!");
         } catch (IOException e) {
             throw new StatementException("reading from file threw " + e.getMessage());
         } catch (NumberFormatException e) {
@@ -58,6 +52,6 @@ public record ReadFileStmt(IExp exp, String varName) implements IStmt {
 
     @Override
     public String toString() {
-        return "readfile(" + exp + ", " + varName + ")";
+        return "readFile(" + exp + ", " + varName + ")";
     }
 }

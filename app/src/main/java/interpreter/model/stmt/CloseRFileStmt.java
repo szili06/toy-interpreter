@@ -11,7 +11,7 @@ import java.io.IOException;
 public record CloseRFileStmt(IExp exp) implements IStmt {
 
     @Override
-    public PrgState execute(PrgState state) throws StatementException {
+    public PrgState execute(PrgState state) throws MyException {
         StringValue fileName;
         try {
             var temp = exp.eval(state.getSymTable());
@@ -23,15 +23,13 @@ public record CloseRFileStmt(IExp exp) implements IStmt {
             throw new StatementException("Error when evaluating filename!");
         }
         if(!state.getFileTable().isDefined(fileName)) {
-            throw new StatementException("File " + fileName + "not opened!");
+            throw new StatementException("File " + fileName + " not opened!");
         }
 
         try {
             var file = state.getFileTable().lookup(fileName);
             file.close();
             state.getFileTable().remove(fileName);
-        } catch (MyException e) {
-            throw new StatementException("Error on closing file!");
         } catch (IOException e) {
             throw new StatementException("IO error when closing file!");
         }
