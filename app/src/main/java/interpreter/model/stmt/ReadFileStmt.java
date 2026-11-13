@@ -17,7 +17,7 @@ public record ReadFileStmt(IExp exp, String varName) implements IStmt {
     @Override
     public PrgState execute(PrgState state) throws MyException {
         try {
-            IValue fileName = exp.eval(state.getSymTable());
+            IValue fileName = exp.eval(state.getSymTable(), state.getHeap());
             if (!(fileName instanceof StringValue)) {
                 throw new StatementException("filename not a string!");
             }

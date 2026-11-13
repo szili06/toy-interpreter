@@ -7,7 +7,7 @@ import interpreter.model.exp.IExp;
 public record PrintStmt(IExp exp) implements IStmt {
     @Override
     public PrgState execute(PrgState state) throws MyException {
-        var val = exp.eval(state.getSymTable());
+        var val = exp.eval(state.getSymTable(), state.getHeap());
         state.getOut().add(val);
         return state;
     }

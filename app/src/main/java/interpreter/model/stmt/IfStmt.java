@@ -10,7 +10,7 @@ public record IfStmt(IExp exp, IStmt thenS, IStmt elseS) implements IStmt {
 
     @Override
     public PrgState execute(PrgState state) throws MyException {
-        var cond = exp.eval(state.getSymTable());
+        var cond = exp.eval(state.getSymTable(), state.getHeap());
         if(!(cond instanceof BoolValue(boolean b1))) {
             throw new StatementException("condition's result is not BoolType");
         }

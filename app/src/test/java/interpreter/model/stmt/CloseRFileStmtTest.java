@@ -32,7 +32,7 @@ class CloseRFileStmtTest {
     @Test
     void testWorks() {
         assertDoesNotThrow(() -> new CloseRFileStmt(file).execute(state));
-        assertFalse(state.getFileTable().isDefined((StringValue) file.eval(state.getSymTable())));
+        assertFalse(state.getFileTable().isDefined((StringValue) file.eval(state.getSymTable(), state.getHeap())));
     }
 
     @Test

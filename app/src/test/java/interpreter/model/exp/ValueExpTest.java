@@ -9,6 +9,6 @@ class ValueExpTest {
     @Test
     void returnsValue() {
         var exp = new ValueExp(new IntValue(5));
-        assertEquals(new IntValue(5), exp.eval(null));
+        assertEquals(new IntValue(5), exp.eval(null, null));
     }
 }
