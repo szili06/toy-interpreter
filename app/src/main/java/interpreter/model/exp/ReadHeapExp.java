@@ -21,4 +21,9 @@ public record ReadHeapExp(IExp exp) implements IExp {
             throw new ExpressionException("Reference not defined in heap!");
         }
     }
+
+    @Override
+    public String toString() {
+        return "rH(" + exp + ")";
+    }
 }
