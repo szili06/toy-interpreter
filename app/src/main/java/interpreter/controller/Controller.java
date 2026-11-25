@@ -5,14 +5,9 @@ import interpreter.exceptions.MyException;
 import interpreter.exceptions.StatementException;
 import interpreter.model.PrgState;
 import interpreter.model.stmt.IStmt;
-import interpreter.model.value.IValue;
-import interpreter.model.value.RefValue;
 import interpreter.repository.IRepository;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
+import static interpreter.controller.GarbageCollector.*;
 
 public class Controller {
     private final IRepository repo;
@@ -36,7 +31,7 @@ public class Controller {
         while (!prg.getExeStack().isEmpty()) {
             oneStep(prg);
             repo.logPrgStateExec();
-            prg.getHeap().setContent(unsafeGarbageCollector(
+            prg.getHeap().setContent(safeGarbageCollector(
                     getAddrFromSymTable(prg.getSymTable().toMap().values()),
                     prg.getHeap().getContent()));
             repo.logPrgStateExec();
