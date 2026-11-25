@@ -82,7 +82,7 @@ public class Examples {
                             new CompStmt(new PrintStmt(new ReadHeapExp(new VarExp("v"))),
                                     new CompStmt(new WriteHeapStmt("v", new ValueExp(new IntValue(30))),
                                             new PrintStmt(new ArithExp(ArithOp.ADD,
-                                                    new ReadHeapExp(new ReadHeapExp(new VarExp("v"))),
+                                                    new ReadHeapExp(new VarExp("v")),
                                                     new ValueExp(new IntValue(5))))))));
 
     public static final IStmt EX9 =

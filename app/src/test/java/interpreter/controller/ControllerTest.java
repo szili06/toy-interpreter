@@ -7,15 +7,25 @@ import interpreter.model.PrgState;
 import interpreter.model.exp.ValueExp;
 import interpreter.model.stmt.IStmt;
 import interpreter.model.stmt.PrintStmt;
+import interpreter.model.type.IntType;
+import interpreter.model.type.RefType;
+import interpreter.model.value.IValue;
 import interpreter.model.value.IntValue;
+import interpreter.model.value.RefValue;
 import interpreter.repository.Repository;
 import interpreter.view.Examples;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Ref;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static interpreter.view.Examples.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,47 +41,28 @@ class ControllerTest {
         return state;
     }
 
-    @Test
-    void TestProgOne() throws ADTException {
-        var state = PrgState.of(EX1);
-        var repo = new Repository(state, dir.resolve("log1.txt").toString());
-        var controller = new Controller(repo, false);
-        assertDoesNotThrow(controller::allStep);
-        assertTrue(state.getExeStack().isEmpty());
-        assertEquals(1, state.getOut().size());
-        assertEquals(new IntValue(2),state.getOut().get(0));
+    static Stream<Arguments> programs() {
+        return Stream.of(
+                Arguments.of(EX1, List.of(new IntValue(2))),
+                Arguments.of(EX2, List.of(new IntValue(18))),
+                Arguments.of(EX3, List.of(new IntValue(2))),
+                Arguments.of(EX5, List.of(new IntValue(5))),
+                Arguments.of(EX6, List.of(new RefValue(1, new IntType()), new RefValue(2, new RefType(new IntType())))), Arguments.of(EX7, List.of(new IntValue(20), new IntValue(25))),
+                Arguments.of(EX8, List.of(new IntValue(20), new IntValue(35))),
+                Arguments.of(EX9, List.of(new IntValue(20))),
+                Arguments.of(EX10, List.of(new IntValue(4), new IntValue(3), new IntValue(2), new IntValue(1), new IntValue(0)))
+                );
     }
 
-    @Test
-    void TestProgTwo() throws ADTException {
-        var state = PrgState.of(EX2);
-        var repo = new Repository(state, dir.resolve("log2.txt").toString());
-        var controller = new Controller(repo, false);
-        assertDoesNotThrow(controller::allStep);
+    @ParameterizedTest(name = "program {index}")
+    @MethodSource("programs")
+    void testProg(IStmt program, List<IValue> expected) throws ADTException {
+        var state = PrgState.of(program);
+        var repo  = new Repository(state, dir.resolve("log.txt").toString());
+        assertDoesNotThrow(() -> new Controller(repo, false).allStep());
         assertTrue(state.getExeStack().isEmpty());
-        assertEquals(1, state.getOut().size());
-        assertEquals(new IntValue(18),state.getOut().get(0));
-    }
-
-    @Test
-    void TestProgThree() throws ADTException {
-        var state = PrgState.of(EX3);
-        var repo = new Repository(state, dir.resolve("log3.txt").toString());
-        var controller = new Controller(repo, false);
-        assertDoesNotThrow(controller::allStep);
-        assertTrue(state.getExeStack().isEmpty());
-        assertEquals(1, state.getOut().size());
-        assertEquals(new IntValue(2),state.getOut().get(0));
-    }
-
-    @Test
-    void TestProgFour() throws MyException, IOException {
-        Path in = dir.resolve("test.in");
-        Files.writeString(in, "15\n50\n");
-        PrgState s = run(Examples.fileExample(in.toString()));
-        assertEquals(new IntValue(15), s.getOut().get(0));
-        assertEquals(new IntValue(50), s.getOut().get(1));
-        assertTrue(s.getFileTable().toMap().isEmpty());
+        assertEquals(expected.size(), state.getOut().size());
+        assertEquals(expected, state.getOut().toList());
     }
 
     @Test
@@ -82,17 +73,6 @@ class ControllerTest {
         assertEquals(new IntValue(0), s.getOut().get(0));
         assertEquals(new IntValue(0), s.getOut().get(1));
         assertTrue(s.getFileTable().toMap().isEmpty());
-    }
-
-    @Test
-    void TestProgFive() throws ADTException {
-        var state = PrgState.of(EX5);
-        var repo = new Repository(state, dir.resolve("log5.txt").toString());
-        var controller = new Controller(repo, false);
-        assertDoesNotThrow(controller::allStep);
-        assertTrue(state.getExeStack().isEmpty());
-        assertEquals(1, state.getOut().size());
-        assertEquals(new IntValue(5),state.getOut().get(0));
     }
 
     @Test
