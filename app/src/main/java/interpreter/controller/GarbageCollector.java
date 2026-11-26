@@ -27,7 +27,7 @@ public final class GarbageCollector {
     }
 
     public static Set<Integer> reachableAddresses(Set<Integer> roots, Map<Integer, IValue> heap) {
-        Set<Integer> addresses = roots;
+        Set<Integer> addresses = new HashSet<>(Set.copyOf(roots));
         Set<Integer> newAddresses = Set.copyOf(addresses);
         do {
             newAddresses = newAddresses.stream()
@@ -35,7 +35,7 @@ public final class GarbageCollector {
                     .map(a->((RefValue) heap.get(a)).address())
                     .collect(Collectors.toSet());
             addresses.addAll(newAddresses);
-        }while (!newAddresses.isEmpty());
+        } while (!newAddresses.isEmpty());
         return addresses;
     }
 
